@@ -13,6 +13,7 @@ class PlaylistTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("Testing Commit + Pull Request")
+        print("The print statement above is incorrect, we need to talk to John about his coding, possible fire him")
         tableView.reloadData()
     }
     
