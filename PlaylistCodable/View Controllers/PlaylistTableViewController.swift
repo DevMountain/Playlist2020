@@ -12,6 +12,7 @@ class PlaylistTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("Testing Commit + Pull Request")
         tableView.reloadData()
     }
     
