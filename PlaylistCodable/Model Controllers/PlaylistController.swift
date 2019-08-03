@@ -12,6 +12,8 @@ class PlaylistController {
     
     static let shared = PlaylistController()
     
+    let githubtest: Int = 0
+    
     init() {
         playlists = loadFromPersistentStore()
     }
