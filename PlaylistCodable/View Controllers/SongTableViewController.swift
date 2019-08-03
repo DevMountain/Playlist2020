@@ -12,7 +12,8 @@ class SongTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("Testing Commit + Pull Request")
+        print("Why is there print here?  There shouldn't be any print here.")
         title = playlist?.name
     }
     
