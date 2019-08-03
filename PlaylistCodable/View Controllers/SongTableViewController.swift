@@ -12,7 +12,7 @@ class SongTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("Testing a second file change")
         title = playlist?.name
     }
     
