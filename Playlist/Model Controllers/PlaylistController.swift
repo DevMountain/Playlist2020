@@ -10,24 +10,21 @@ import Foundation
 
 class PlaylistController {
     
+    // MARK: - Shared Instance
     static let shared = PlaylistController()
     
-    init() {
-        playlists = loadFromPersistentStore()
-    }
+    // MARK: - Properties
+    var playlists = [Playlist]()
     
+    // MARK: - Crud Methods
+    // Create
     func add(playlistWithName name: String) {
         let playlist = Playlist(name: name, songs: [])
         playlists.append(playlist)
         saveToPersistentStore()
     }
     
-    func delete(playlist: Playlist) {
-        guard let index = playlists.index(of: playlist) else { return }
-        playlists.remove(at: index)
-        saveToPersistentStore()
-    }
-    
+    // Update
     func add(song: Song, toPlaylist playlist: Playlist) {
         playlist.songs.append(song)
         saveToPersistentStore()
@@ -39,8 +36,14 @@ class PlaylistController {
         saveToPersistentStore()
     }
     
-    // MARK: - Persistence
+    // Delete
+    func delete(playlist: Playlist) {
+        guard let index = playlists.index(of: playlist) else { return }
+        playlists.remove(at: index)
+        saveToPersistentStore()
+    }
     
+    // MARK: - Persistence
     func fileURL() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
@@ -50,9 +53,8 @@ class PlaylistController {
     }
     
     func saveToPersistentStore() {
-        let je = JSONEncoder()
         do {
-            let data =  try je.encode(playlists)
+            let data =  try JSONEncoder().encode(playlists)
             print(data)
             print(String(data: data, encoding: .utf8)!)
             try data.write(to: fileURL())
@@ -61,19 +63,13 @@ class PlaylistController {
         }
     }
     
-    func loadFromPersistentStore() -> [Playlist] {
+    func loadFromPersistentStore() {
         do {
             let data = try Data(contentsOf: fileURL())
-            let jd = JSONDecoder()
-            let playlists = try jd.decode([Playlist].self, from: data)
-            return playlists
+            let playlists = try JSONDecoder().decode([Playlist].self, from: data)
+            self.playlists = playlists
         } catch let error {
             print("Error loading data from disk \(error)")
         }
-        return []
     }
-    
-    // MARK: - Properties
-    
-    var playlists = [Playlist]()
 }

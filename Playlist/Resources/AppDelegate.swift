@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  PlaylistCodable
+//  Playlist
 //
 //  Created by Aaron Martinez on 11/1/17.
 //  Copyright © 2017 Aaron Martinez. All rights reserved.

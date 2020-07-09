@@ -10,11 +10,17 @@ import UIKit
 
 class PlaylistTableViewController: UITableViewController {
     
+    // MARK: - Outlets
+    @IBOutlet weak var playlistTextField: UITextField!
+
+    // MARK: - Lifecycle Methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        PlaylistController.shared.loadFromPersistentStore()
         tableView.reloadData()
     }
     
+    // MARK: - Actions
     @IBAction func addButtonTapped(_ sender: Any) {
         guard let playlistName = playlistTextField.text, !playlistName.isEmpty else { return }
         PlaylistController.shared.add(playlistWithName: playlistName)
@@ -23,7 +29,6 @@ class PlaylistTableViewController: UITableViewController {
     }
     
     // MARK: UITableViewDataSource/Delegate
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return PlaylistController.shared.playlists.count
     }
@@ -56,17 +61,12 @@ class PlaylistTableViewController: UITableViewController {
     }
     
     // MARK: Navigation
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toPlaylistDetail",
-            let indexPath = tableView.indexPathForSelectedRow {
+        if segue.identifier == "toPlaylistDetail" {
+            guard let indexPath = tableView.indexPathForSelectedRow,
+                let destination = segue.destination as? SongTableViewController else { return }
             let playlist = PlaylistController.shared.playlists[indexPath.row]
-            let songVC = segue.destination as? SongTableViewController
-            songVC?.playlist = playlist
+            destination.playlist = playlist
         }
     }
-    
-    // MARK: Properties
-    
-    @IBOutlet weak var playlistTextField: UITextField!
 }

@@ -10,12 +10,21 @@ import UIKit
 
 class SongTableViewController: UITableViewController {
     
+    // MARK: - Outlets
+    @IBOutlet weak var songTextField: UITextField!
+    @IBOutlet weak var artistTextField: UITextField!
+    
+    // MARK: Properties
+    var playlist: Playlist?
+
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = playlist?.name
     }
     
+    // MARK: - Actions
     @IBAction func addButtonTapped(_ sender: Any) {
         guard let playlist = playlist,
             let name = songTextField.text,
@@ -29,7 +38,6 @@ class SongTableViewController: UITableViewController {
     }
     
     // MARK: UITableViewDataSource/Delegate
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return playlist?.songs.count ?? 0
     }
@@ -57,11 +65,4 @@ class SongTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-    
-    // MARK: Properties
-    
-    var playlist: Playlist?
-    
-    @IBOutlet weak var songTextField: UITextField!
-    @IBOutlet weak var artistTextField: UITextField!
 }

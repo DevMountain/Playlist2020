@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Song: Equatable, Codable {
+class Song: Codable {
     
     init(name: String, artist: String) {
         self.name = name
@@ -21,6 +21,8 @@ class Song: Equatable, Codable {
     let artist: String
 }
 
-func ==(lhs: Song, rhs: Song) -> Bool {
-    return lhs.name == rhs.name && lhs.artist == rhs.artist
+extension Song: Equatable {
+    static func == (lhs: Song, rhs: Song) -> Bool {
+        return lhs.name == rhs.name && lhs.artist == rhs.artist
+    }
 }
